@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "antd-img-crop": "^4.13.0",
+    "jest-mock-axios": "^4.7.3"
+  }
+}

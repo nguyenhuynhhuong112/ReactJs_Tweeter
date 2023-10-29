@@ -1,0 +1,20 @@
+.status-tabs {
+    display: flex;
+    flex-wrap: wrap; 
+    .status-tab {
+        flex-grow: 1;
+        text-align: center;
+        padding: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+    
+    // @media (max-width: 768px) {
+    //     .status-tab {
+    //       flex-basis: 33.33%;
+    //     }
+    // }
+}

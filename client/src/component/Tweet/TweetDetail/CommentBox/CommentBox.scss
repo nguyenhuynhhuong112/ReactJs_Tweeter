@@ -1,0 +1,255 @@
+.tweet {
+
+  border-radius: 10px;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  margin: 20px;
+
+  padding: 10px;
+
+}
+
+ 
+
+.user-info {
+
+  display: flex;
+
+  align-items: center;
+
+  margin-bottom: 8px;
+
+}
+
+ 
+
+.user-info img {
+
+  width: 50px;
+
+  height: 50px;
+
+  border-radius: 50%;
+
+  margin-right: 10px;
+
+}
+
+ 
+
+.user-details h3 {
+
+  margin-left: 10px;
+
+}
+
+ 
+
+.user-details p {
+
+  color: #6b7c93;
+
+  margin: 0;
+
+  font-size: 14px;
+
+  margin-left: 10px;
+
+}
+
+ 
+
+.tweet-content {
+
+  font-size: 16px;
+
+  margin: 10px;
+
+}
+
+ 
+
+.tweet-image {
+
+  width: 100%;
+
+  max-height: 650px;
+
+  object-fit: none;
+
+  margin-top: 10px;
+
+}
+
+ 
+
+.engagement {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-top: 20px;
+
+  padding-top: 30px;
+
+  border-top: 1px solid #e8e8e8;
+
+ 
+
+  .anticon-message {
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+  }
+
+}
+
+ 
+
+.icon {
+
+  font-size: 25px;
+
+  cursor: pointer;
+
+  color: #6b7c93;
+
+  margin-right: 10px;
+
+  margin-top: 5px;
+
+ display: flex;
+
+  justify-items: center;
+
+  transition: color 0.3s ease;
+
+}
+
+ 
+
+.comment-box {
+
+  margin-top: 8px;
+
+  height: 29px;
+
+}
+
+ 
+
+.icon:hover {
+
+  color: #1da1f2;
+
+}
+
+.amountInteraction{
+
+  padding-left: 4px;
+
+}
+
+.comment-card-content {
+
+  display: flex;
+
+  align-items: center;
+
+  padding-top: 10px;
+
+  padding-bottom: 10px;
+
+}
+
+ 
+
+.avatar-container {
+
+  margin-right: 20px;
+
+}
+
+.comment-text{
+
+  margin-right: 20px;
+
+  flex-direction: row;
+
+  color :blue;
+
+}
+
+.btnEdit{
+
+  margin-right: 20px;
+
+  flex-direction: row;
+
+  color :blue;
+
+}
+
+.btnDelete{
+
+  margin-right: 20px;
+
+  flex-direction: row;
+
+  color :red;
+
+}
+
+.userName-area{
+
+  padding-top: 10px;
+
+}
+
+.btnUpdate{
+
+  color :blue;
+
+  float: inline-end;
+
+  margin: 10px;
+
+}
+
+.btnCancel{
+
+  color :black;
+
+  float: inline-end;
+
+  margin: 10px;
+
+}
+
+.edit-mode {
+
+  background-color: #f0f0f0;
+
+  border: 1px solid #ccc;
+
+  padding: 10px;
+
+  margin: 10px 0;
+
+  display: flex;
+
+  align-items: center;
+
+}
+
+.Edit_Update{
+
+  width: 100%;
+
+}

@@ -1,0 +1,91 @@
+.tweet {
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.user-info img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-details h3 {
+  margin-left: 10px;
+}
+
+.user-details p {
+  color: #6b7c93;
+  margin: 0;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.tweet-content {
+  font-size: 16px;
+}
+
+.tweet-image {
+  width: 100%;
+
+  object-fit: none;
+  margin-top: 10px;
+}
+
+.engagement {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 30px;
+  border-top: 1px solid #e8e8e8;
+
+  .anticon-message {
+    font-size: 17px;
+    cursor: pointer;
+  }
+}
+
+.icon {
+  font-size: 12px;
+  cursor: pointer;
+  color: #6b7c93;
+  margin-right: 10px;
+  margin-top: 5px;
+  display: flex;
+  justify-items: center;
+  transition: color 0.3s ease;
+}
+
+.icon:hover {
+  color: #1da1f2;
+}
+.amountInteraction {
+  padding-left: 4px;
+}
+.btnSave{
+  background-color: #FFF;
+  color: #1da1f2;
+  width: 50px;
+  border-radius: 20px;
+  border: 1px solid #1da1f2;
+  &:hover{
+    background-color: #1da1f2;
+    color: #FFF;
+    font-size: 1rem;
+  }
+}
+
+.btnCloseEdit{
+  &:hover{
+    color: black;
+    font-size: 1rem;
+  }
+}
