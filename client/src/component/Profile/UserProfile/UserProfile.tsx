@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 import { SetupProfile } from '../SetupProfile/SetupProfile';
-import avatar from '../../../assets/avatar.jpg';
 import { Avatar, Image } from 'antd';
 import { Follow } from '../Follow/Follow';
 
@@ -38,7 +37,6 @@ export const UserProfile: React.FC = () => {
           <div className="avatar-button-container mt-4 flex items-start justify-between px-6">
             <div className="avatar">
               <Avatar src={avatarimage} alt="User Profile" className="w-24 h-24 rounded-full" />
-              {/* <Image width={96} height={96} src={`${avatarimage}`} className="rounded-full object-contain" /> */}
             </div>
             <button
               className="bg-blue-500 text-white py-1 px-2 rounded"

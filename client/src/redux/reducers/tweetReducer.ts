@@ -20,13 +20,13 @@ export const getTweetReducer = (state = initialState, action: apiAction) => {
     case 'GET_TWEET_PENDING':
       return { ...state, loading: true, error: null };
     case 'GET_TWEET_FULFILL':
-      const tweets = action.payload.map((tweet:any)=>{
-        const format = formatTweetDate(tweet.dateTweet)
+      const tweets = action.payload.map((tweet: any) => {
+        const format = formatTweetDate(tweet.dateTweet);
         return {
           ...tweet,
-          dateTweet:format
-        }
-      })
+          dateTweet: format,
+        };
+      });
       return {
         ...state,
         loading: false,
@@ -44,7 +44,7 @@ export const getTweetReducer = (state = initialState, action: apiAction) => {
         _id,
         content,
         image,
-        dateTweet,  
+        dateTweet,
         userName,
         fullName,
       };
@@ -250,6 +250,32 @@ export const getTweetReducer = (state = initialState, action: apiAction) => {
       };
 
     case 'UPDATE_COMMENT_ERROR':
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case 'LIKE_COMMENT_PENDING':
+      return {
+        ...state,
+        loading: true,
+      };
+    case 'LIKE_COMMENT_FULFILL': {
+      const tweetPayload = action.payload;
+      const updatedTweets = (state.data || []).map((tweet: any) => {
+        if (tweet._id === tweetPayload._id) {
+          return { ...tweet, comments: [...tweetPayload.comments] };
+        }
+        return tweet;
+      });
+      return {
+        ...state,
+        loading: false,
+        data: updatedTweets,
+        error: null,
+      };
+    }
+    case 'LIKE_COMMENT_ERROR':
       return {
         ...state,
         loading: false,

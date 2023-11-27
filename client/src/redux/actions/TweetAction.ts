@@ -92,4 +92,12 @@ export const TweetAction = {
     }),
     errors: (error: string) => ({ type: 'UPDATE_COMMENT_ERROR', payload: error }),
   },
+  likesComment: {
+    pending: () => ({ type: 'LIKE_COMMENT_PENDING' }),
+    fulfill: (data: any) => ({
+      type: 'LIKE_COMMENT_FULFILL',
+      payload: data,
+    }),
+    errors: (error: string) => ({ type: 'LIKE_COMMENT_ERROR', payload: error }),
+  },
 };

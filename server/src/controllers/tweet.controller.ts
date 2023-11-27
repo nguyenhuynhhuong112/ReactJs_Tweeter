@@ -38,7 +38,7 @@ export const getTweetByUserName: RequestHandler = async (req, res) => {
     const { userName } = req.params;
     const tweetFind = await Tweet.find({ userName: userName }).sort({ dateTweet: -1 });
     if (!tweetFind) throw new Error('User not found');
-    
+
     res.status(200).json(tweetFind);
   } catch (error) {
     res.status(500).json('Internal server error');
@@ -108,30 +108,30 @@ export const updateCountLike: RequestHandler = async (req, res) => {
 export const updateCountBookmark: RequestHandler = async (req, res) => {
   try {
     const { TweetId } = req.params;
-
     const user = res.locals.user;
-    const tweet = await Tweet.findOne({ _id: TweetId });
+    const tweet = await Tweet.findById(TweetId);
+
     if (!tweet) {
       throw new Error('Tweet not found');
     }
 
-    if (tweet.bookmarks.find((element) => element.userName === user.userName)) {
-      const index = tweet.bookmarks.indexOf({ userName: user.userName });
-      tweet.bookmarks.splice(index, 1);
+    const isBookmarked = tweet.bookmarks.some((bookmark) => bookmark.userName === user.userName);
+
+    if (isBookmarked) {
+      tweet.bookmarks = tweet.bookmarks.filter((bookmark) => bookmark.userName !== user.userName);
     } else {
       tweet.bookmarks.push({ userName: user.userName });
     }
 
-    await tweet.save();
-    console.log('name', tweet);
-    res.status(200).json(tweet);
+    const updatedTweet = await tweet.save();
+
+    res.status(200).json(updatedTweet);
   } catch (error) {
     console.error('Error updating tweet:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
-
-  // response is tweet update have array like user
 };
+
 export const updateTweet: RequestHandler = async (req, res) => {
   try {
     const user = res.locals.user;
@@ -240,7 +240,7 @@ export const getBookmarkByUserName: RequestHandler = async (req, res) => {
     const tweetFind = await Tweet.find({ 'bookmarks.userName': user.userName });
     console.log(tweetFind);
     if (!tweetFind) throw new Error('User not found');
-   
+
     res.status(200).json(tweetFind);
   } catch (error) {
     res.status(500).json('Internal server error');

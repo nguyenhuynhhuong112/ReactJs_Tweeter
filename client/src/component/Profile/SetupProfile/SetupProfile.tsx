@@ -28,8 +28,6 @@ export const SetupProfile: React.FC<SetupProfileProps> = ({ isProfileSetupOpen, 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const coverImageFileInputRef = useRef<HTMLInputElement>(null);
   const avatarFileInputRef = useRef<HTMLInputElement>(null);
-  const [isFullNameValid, setIsFullNameValid] = useState(true);
-  const [isPasswordValid, setIsPasswordValid] = useState(true);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -152,20 +150,7 @@ export const SetupProfile: React.FC<SetupProfileProps> = ({ isProfileSetupOpen, 
       console.log('error: ', error);
     }
   };
-  console.log('username ', user.data.userName);
-  const checkFullName = () => {
-    const regexPattern = /^[A-Z][a-z]*(\s+[A-Z][a-z]*){1,}$/;
-    setIsFullNameValid(regexPattern.test(fullName));
-  };
-  const checkPassword = () => {
-    const regexPattern = /^[a-zA-z0-9!@#$%^&*(),.?\":{}|<>]{6,}$/;
-    setIsPasswordValid(regexPattern.test(password));
-  };
-  const [isEmailValid, setIsEmailValid] = useState(true);
-  const checkEmail = () => {
-    const regexPattern = /^[a-z0-9]+@[a-z]+\.(com)$/;
-    setIsEmailValid(regexPattern.test(email));
-  };
+
   return (
     <div className={`${setup}`}>
       <Form labelCol={{ span: 5 }} wrapperCol={{ span: 14 }} layout="horizontal" className="edit-form">
@@ -178,23 +163,16 @@ export const SetupProfile: React.FC<SetupProfileProps> = ({ isProfileSetupOpen, 
             </Button>
           </Form.Item>
         </div>
-        <span style={{ color: isFullNameValid ? '' : 'red' }}>
-          {isFullNameValid
-            ? ''
-            : 'Full name invalid. Must have 2 words in capital letters, the first letter of the words must be separated by a space, no special characters or numbers'}
-        </span>
+
         <Form.Item label="Full Name">
-          <Input name="fullName" value={fullName} onChange={handleChange} onBlur={checkFullName} />
+          <Input name="fullName" value={fullName} onChange={handleChange} />
         </Form.Item>
-        <span style={{ color: isEmailValid ? '' : 'red' }}>{isEmailValid ? '' : 'Email invalid'}</span>
         <Form.Item label="Email">
-          <Input type="email" name="email" value={email} onChange={handleChange} onBlur={checkEmail} />
+          <Input type="email" name="email" value={email} onChange={handleChange} />
         </Form.Item>
-        <span style={{ color: isPasswordValid ? '' : 'red' }}>
-          {isPasswordValid ? '' : 'Password must be 6 characters long'}
-        </span>
+
         <Form.Item label="Password">
-          <Input type="password" name="password" value={password} onChange={handleChange} onBlur={checkPassword} />
+          <Input type="password" name="password" value={password} onChange={handleChange} />
         </Form.Item>
         <Form.Item label="Cover Image" valuePropName="fileList" className="">
           <ImgCrop>

@@ -187,7 +187,8 @@
 }
 
 .btnEdit{
-
+  
+  margin-left: 20px;
   margin-right: 20px;
 
   flex-direction: row;
@@ -240,7 +241,7 @@
 
   padding: 10px;
 
-  margin: 10px 0;
+  margin: 10px 10px;
 
   display: flex;
 
@@ -252,4 +253,8 @@
 
   width: 100%;
 
+}
+.tool{
+  display: flex;
+ 
 }

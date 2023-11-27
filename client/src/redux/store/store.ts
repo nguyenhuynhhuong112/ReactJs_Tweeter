@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import {  configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import {
   GetTweetDetail,
   GetAvatarReducer,
@@ -10,6 +10,7 @@ import {
   getAllUserReducer,
   getNotificationReducer,
   getUserFollowReducer,
+  getBookmarkReducer,
 } from '../index';
 
 export const store = configureStore({
@@ -22,7 +23,8 @@ export const store = configureStore({
     userSearch: getUserSearchReducer,
     userFollow: getUserFollowReducer,
     avatarAuthor: GetAvatarReducer,
-    tweetDetail:GetTweetDetail
+    tweetDetail: GetTweetDetail,
+    bookmarks: getBookmarkReducer,
   }),
   devTools: { name: ' Twetter' },
 });

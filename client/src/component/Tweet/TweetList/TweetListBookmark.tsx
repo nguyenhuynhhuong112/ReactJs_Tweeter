@@ -8,8 +8,6 @@ import { Spinner } from '../../Icon';
 export const TweetListBookmark: React.FC = () => {
   const dispatch = useDispatch();
 
-  const user = useSelector((state: any) => state.user);
-  const userName = user.data ? user.data.userName : '';
   const { data: tweetList, loading } = useSelector((state: any) => state.tweets);
   console.log('fj', tweetList);
   const fetchData = async () => {
@@ -17,11 +15,11 @@ export const TweetListBookmark: React.FC = () => {
     const { data, error } = await customFetch({}, `/bookmark`);
     if (data) {
       dispatch(TweetAction.getBookmarkByUserName.fulfill(data));
-    } else dispatch(tweetAction.getBookmarkByUserName.errors(error));
+    } else dispatch(TweetAction.getBookmarkByUserName.errors(error));
   };
   useEffect(() => {
     fetchData();
-  }, [userName]);
+  }, []);
 
   return loading ? (
     <Spinner />
@@ -38,6 +36,8 @@ export const TweetListBookmark: React.FC = () => {
             content={tweet.content}
             imageUrl={tweet.image}
             likes={tweet.likes}
+            comments={tweet.comments}
+            selected={false}
           />
         ))
       ) : (

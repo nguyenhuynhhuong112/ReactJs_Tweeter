@@ -8,7 +8,7 @@ import { TweetAction } from '../../../../redux';
 import { customFetch } from '../../../../utilities/customFetch';
 import { io } from 'socket.io-client';
 
-const { Avatar, Card, Space, Input, Button } = antd;
+const { Avatar, Space, Input, Button } = antd;
 interface ICommentProps {
   tweetId: string;
   commentId: string;
@@ -39,6 +39,7 @@ export const CommentBox: React.FC<ICommentProps> = ({ tweetId, commentId, userNa
         const name = user.data && user.data.userName;
         console.log('user comment ', name);
         if (userName === name) {
+          setValue('');
           return;
         }
         if (socket && socket.connected) {

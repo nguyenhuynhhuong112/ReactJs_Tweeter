@@ -36,9 +36,9 @@ export const getCommentsByTweet: RequestHandler = async (req: express.Request, r
       return res.status(404).json({ message: 'Tweet not found' });
     }
 
-    const comments = tweet.comments;
+    tweet.comments.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1));
 
-    return res.status(200).json(comments);
+    return res.status(200).json(tweet.comments);
   } catch (error) {
     console.error('Error getting comments for tweet:', error);
     return res.status(500).json({ message: 'Internal server error' });
@@ -46,7 +46,7 @@ export const getCommentsByTweet: RequestHandler = async (req: express.Request, r
 };
 export const deleteComment: RequestHandler = async (req: express.Request, res: express.Response) => {
   try {
-    const user = res.locals.user;
+    // const user = res.locals.user;
     const { tweetId, commentId } = req.params;
     const tweet = await Tweet.findById(tweetId);
     if (!tweet) {
@@ -92,6 +92,34 @@ export const updateComment: RequestHandler = async (req: express.Request, res: e
     return res.status(200).json(tweet);
   } catch (error) {
     console.error('Error updating comment:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+export const likesComment: RequestHandler = async (req: express.Request, res: express.Response) => {
+  try {
+    const user = res.locals.user;
+    const { tweetId, commentId } = req.params;
+    const tweet = await Tweet.findById(tweetId);
+    if (!tweet) {
+      return res.status(404).json({ message: 'Tweet not found' });
+    }
+
+    const comment = tweet.comments.id(commentId);
+    if (!comment) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+
+    const liked = comment.likescomment.find((like) => like.userName === user.userName);
+    if (liked) {
+      comment.likescomment = comment.likescomment.filter((like) => like.userName !== user.userName);
+    } else {
+      comment.likescomment.push({ userName: user.userName });
+    }
+    await tweet.save();
+
+    return res.status(200).json(tweet);
+  } catch (error) {
+    console.error('Error like comment:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };

@@ -5,11 +5,15 @@ interface ILike {
 interface IBookmark {
   userName: string;
 }
+interface ILikecomment {
+  userName: string;
+}
 interface IComment {
   content: string;
   userName: string;
   createdAt: Date;
   updatedAt: Date | null;
+  likescomment: ILikecomment[];
 }
 interface ITweet extends Document {
   content: string;
@@ -27,6 +31,7 @@ const commentSchema = new Schema<IComment>({
   content: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: null },
+  likescomment: { type: [{ userName: String }], default: [] },
 });
 const tweetSchema = new mongoose.Schema<ITweet>({
   content: { type: String, required: false },

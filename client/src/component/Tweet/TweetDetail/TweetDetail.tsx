@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Avatar, Card, Divider, Input } from 'antd';
+import { Avatar, Card, Divider, Image, Input } from 'antd';
 import {
   MessageOutlined,
   RetweetOutlined,
@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { customFetch } from '../../../utilities/customFetch';
 import { Message, MessageError } from '../../Icon/Message/Message';
 import { CommentBox, MenuTweetDetail } from '..';
-import { TweetAction } from '../../../redux';
+import { GetBookmarkAction, TweetAction } from '../../../redux';
 import { CommentsList } from './CommentBox/CommentsList';
 import { useNavigate } from 'react-router';
 import { io } from 'socket.io-client';
@@ -39,6 +39,7 @@ export const TweetDetail: React.FC<TweetProps> = ({
   content,
   imageUrl,
   selected,
+  comments,
 }) => {
   const [tweetState, setTweetState] = useState({
     liked: false,
@@ -57,7 +58,7 @@ export const TweetDetail: React.FC<TweetProps> = ({
   const { data: tweetList } = useSelector((state: any) => state.tweets);
   const tweet = tweetList && tweetList.find((state: any) => state._id === tweetId);
   const dispatch = useDispatch();
-
+  console.log('tweet detail ', tweet);
   const likeCount = tweet && tweet.likes ? tweet.likes.length : 0;
   const bookmarkCount = tweet && tweet.bookmarks ? tweet.bookmarks.length : 0;
   const commentCount = tweet && tweet.comments ? tweet.comments.length : 0;
@@ -77,14 +78,12 @@ export const TweetDetail: React.FC<TweetProps> = ({
     autoConnect: false,
   });
   const handleBookmark = async () => {
-    dispatch(TweetAction.updateCountBookmark.pending());
     const { data, error } = await customFetch({ method: 'patch' }, `/tweet/bookmark/${tweetId}`);
+    dispatch(GetBookmarkAction.updateCountBookmark.pending());
     if (data) {
-      dispatch(TweetAction.updateCountBookmark.fulfill(data || []));
-      Message('cập nhật thành công');
-    } else dispatch(TweetAction.updateCountBookmark.errors(error));
-
-    location.reload();
+      dispatch(GetBookmarkAction.updateCountBookmark.fulfill(data));
+      console.log('data bookmark ', data);
+    } else dispatch(GetBookmarkAction.updateCountBookmark.errors(error));
   };
   const handleLike = async () => {
     dispatch(TweetAction.updateCountLike.pending());
@@ -215,8 +214,8 @@ export const TweetDetail: React.FC<TweetProps> = ({
   };
   const checkUser = userName === user.data?.userName ? true : false;
   const imageAvatarAuthor = useSelector((state: any) => state.avatarAuthor);
-  const numCommentsToDisplay = selected ? commentCount : 3;
-  const visibleComments = tweet?.comments?.slice(0, numCommentsToDisplay) || [];
+  const numCommentsToDisplay = selected ? (comments ? comments.length : 0) : 3;
+  const visibleComments = comments ? comments.slice(0, numCommentsToDisplay) : [];
 
   return (
     <Card className="border-none">
@@ -269,7 +268,11 @@ export const TweetDetail: React.FC<TweetProps> = ({
       ) : (
         <>
           <p className="tweet-content">{content}</p>
-          {editedImageUrl && imageVisible && <img src={editedImageUrl} alt="Tweet Image" />}
+          {editedImageUrl && imageVisible && (
+            <div className="items-center flex justify-center">
+              <Image src={`${editedImageUrl}`} className="rounded-lg object-cover" />
+            </div>
+          )}
           <Divider />
           <div className="flex gap-4">
             <div className={iconClassName} onClick={() => navigate(`/tweet/${tweetId}`)}>
@@ -305,17 +308,32 @@ export const TweetDetail: React.FC<TweetProps> = ({
       )}
       <Divider />
       <CommentBox commentId="" content={content} imageUrl="" tweetId={tweetId} userName={userName} />
-      {visibleComments.map((comment:any) => (
-        <CommentsList
-          key={comment._id}
-          tweetId={tweetId}
-          commentId={comment._id}
-          content={comment.content}
-          timeAgo={comment.dateComment}
-          userName={comment.userName}
-          imageUrl=""
-        />
-      ))}
+      {selected
+        ? tweet &&
+          tweet.comments?.map((comment: any) => (
+            <CommentsList
+              key={comment._id}
+              tweetId={tweetId}
+              commentId={comment._id}
+              content={comment.content}
+              timeAgo={comment.dateComment}
+              userName={comment.userName}
+              imageUrl=""
+              likescomment={comment.likecomment}
+            />
+          ))
+        : visibleComments.map((comment: any) => (
+            <CommentsList
+              key={comment._id}
+              tweetId={tweetId}
+              commentId={comment._id}
+              content={comment.content}
+              timeAgo={comment.dateComment}
+              userName={comment.userName}
+              imageUrl=""
+              likescomment={comment.likecomment}
+            />
+          ))}
     </Card>
   );
 };

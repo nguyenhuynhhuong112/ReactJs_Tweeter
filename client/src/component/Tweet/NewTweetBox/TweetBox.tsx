@@ -79,7 +79,6 @@ export const TweetBox: React.FC<TweetBoxProps> = () => {
       <div className="flex w-full items-center">
         <div className="avatar-button-container" onClick={() => navigate(`/profile`)}>
           <Avatar src={avatarImage} alt="User Profile" className="w-12 h-12 rounded-full" />
-          {/* <img src={avatarImage} alt="User Avatar" className="w-12 h-12 rounded-full object-contain" /> */}
         </div>
         <Input
           bordered={false}

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TweetDetail } from '../TweetDetail/TweetDetail';
-import { GetTweetDetailAction } from '../../../redux';
+import { GetTweetDetailAction, TweetAction } from '../../../redux';
 import { customFetch } from '../../../utilities/customFetch';
 import { useParams } from 'react-router';
 import { Spinner } from '../../../component/Icon';
@@ -16,20 +16,21 @@ export const Tweet = () => {
   const { tweetId } = useParams();
   const dispatch = useDispatch();
   const tweet = useSelector((state: any) => state.tweetDetail.data);
+  const loadTweetById = async () => {
+    dispatch(GetTweetDetailAction.getTweetDetail.pending());
+    const { data, error } = await customFetch({}, `/tweet/${tweetId}`);
+    if (data) {
+      dispatch(GetTweetDetailAction.getTweetDetail.fulfill(data));
+      console.log('data tweet ', data);
+    } else {
+      dispatch(GetTweetDetailAction.getTweetDetail.errors(error));
+    }
+  };
+
   useEffect(() => {
-    const loadTweetById = async () => {
-      dispatch(GetTweetDetailAction.getTweetDetail.pending());
-      const { data, error } = await customFetch({}, `/tweet/${tweetId}`);
-      if (data) {
-        dispatch(GetTweetDetailAction.getTweetDetail.fulfill(data));
-      } else {
-        dispatch(GetTweetDetailAction.getTweetDetail.errors(error));
-      }
-    };
-
     loadTweetById();
-  }, [tweetId]);
-
+  }, []);
+  console.log('tweet ', tweet);
   return (
     <div className="flex flex-col w-full gap-4">
       {tweet ? (

@@ -90,7 +90,7 @@ export const LeftNavigation: React.FC = () => {
     if (data) dispatch(GetAvatarAction.getAuthor.fulfill(data));
     else dispatch(GetAvatarAction.getAuthor.errors(error));
   };
- 
+
   useEffect(() => {
     if (!token) return;
     fetchData();
@@ -104,6 +104,12 @@ export const LeftNavigation: React.FC = () => {
       dispatch(NotificationAction.getNotification.fulfill(data.notification));
     });
     socket.on('like', (data) => {
+      dispatch(NotificationAction.getNotification.fulfill(data.notification));
+    });
+    socket.on('comment', (data) => {
+      dispatch(NotificationAction.getNotification.fulfill(data.notification));
+    });
+    socket.on('likecomment', (data) => {
       dispatch(NotificationAction.getNotification.fulfill(data.notification));
     });
     return () => {

@@ -11,6 +11,7 @@ interface INotification extends Document {
     isRead: boolean;
     createAt: Date;
     tweetId: String;
+    commentId: String;
   }>;
 }
 
@@ -24,6 +25,7 @@ const notificationSchema: Schema = new Schema({
       isRead: { type: Boolean, default: false },
       createdAt: { type: Date, default: Date.now },
       tweetId: { type: String, require: false },
+      commentId: { type: String, require: false },
     },
   ],
 });
